@@ -27,11 +27,13 @@
 # str_b = [str(p) if not hasattr(p, '__name__') else p.__name__ for p in b]
 # ', '.join("'"+str_p+"': "+str_p for str_p in str_b
 
+import sys
+
 safe_builtins = {
     'abs': abs, 'all': all, 'any': any, 'ascii': ascii, 'bin': bin, 'chr': chr, 'dir': dir,
     'divmod': divmod, 'format': format, 'getattr': getattr, 'globals': globals, 'help': help,
     'hasattr': hasattr, 'hash': hash, 'hex': hex, 'id': id, 'isinstance': isinstance,
-    'issubclass': issubclass, 'iter': iter, 'aiter': aiter, 'len': len, 'locals': locals,
+    'issubclass': issubclass, 'iter': iter, 'len': len, 'locals': locals,
     'max': max, 'min': min, 'next': next, 'anext': anext, 'oct': oct, 'ord': ord,
     'pow': pow, 'print': print, 'repr': repr, 'round': round, 'setattr': setattr,
     'sorted': sorted, 'sum': sum, 'vars': vars, 'None': None, 'Ellipsis': Ellipsis,
@@ -75,6 +77,9 @@ safe_builtins = {
     'PermissionError': PermissionError, 'ProcessLookupError': ProcessLookupError,
     'TimeoutError': TimeoutError
 }
+
+if sys.version_info.minor >= 10:
+    safe_builtins['aiter'] = aiter
 
 safe_libraries = ['math']
 
