@@ -21,3 +21,8 @@ print(func())
 # note that callback is supposed to do actually useful stuff
 print('end')
 
+# read out variables/functions:
+# attention! this is most likely not safe(yet)! 
+# executes the func function we created earlier
+print(box.variables["func"]())
+
