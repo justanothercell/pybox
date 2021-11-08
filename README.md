@@ -1,6 +1,9 @@
 # pybox
 A sandbox version of python
 
+join the quickly refactored mostly empty discord server i had lying around!
+https://discord.gg/eHuWatKYwJ
+
 read examples.py for well... examples :)
 
 made for python 3.10, should work in older versions too. uses only builtin libraries.
