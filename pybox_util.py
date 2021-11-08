@@ -27,61 +27,32 @@
 # str_b = [str(p) if not hasattr(p, '__name__') else p.__name__ for p in b]
 # ', '.join("'"+str_p+"': "+str_p for str_p in str_b
 
-import sys
+safe_builtin_names = ['abs', 'all', 'any', 'ascii', 'bin', 'chr', 'dir', 'divmod', 'format', 'getattr', 'globals', 'help',
+                      'hasattr', 'hash', 'hex', 'id', 'isinstance', 'issubclass', 'iter', 'aiter', 'len', 'locals', 'max', 
+                      'min', 'next', 'anext', 'oct', 'ord', 'pow', 'print', 'repr', 'round', 'setattr', 'sorted', 'sum', 
+                      'vars', 'None', 'Ellipsis', 'NotImplemented', 'False', 'True', 'bool', 'bytearray', 'bytes', 
+                      'classmethod', 'complex', 'dict', 'enumerate', 'filter', 'float', 'frozenset', 'property', 'int', 
+                      'list', 'map', 'object', 'range', 'reversed', 'set', 'slice', 'staticmethod', 'str', 'super', 'tuple',
+                      'type', 'zip', 'BaseException', 'Exception', 'TypeError', 'StopAsyncIteration', 'StopIteration', 
+                      'GeneratorExit', 'SystemExit', 'KeyboardInterrupt', 'ImportError', 'ModuleNotFoundError', 'EOFError', 
+                      'RuntimeError', 'RecursionError', 'NotImplementedError', 'NameError', 'UnboundLocalError',
+                      'AttributeError', 'SyntaxError', 'IndentationError', 'TabError', 'LookupError', 'IndexError',
+                      'KeyError', 'ValueError', 'UnicodeError', 'UnicodeEncodeError', 'UnicodeDecodeError',
+                      'UnicodeTranslateError', 'AssertionError', 'ArithmeticError', 'FloatingPointError', 'OverflowError',
+                      'ZeroDivisionError', 'SystemError', 'ReferenceError', 'MemoryError', 'BufferError', 'Warning',
+                      'UserWarning', 'EncodingWarning', 'DeprecationWarning', 'PendingDeprecationWarning', 'SyntaxWarning',
+                      'RuntimeWarning', 'FutureWarning', 'ImportWarning', 'UnicodeWarning', 'BytesWarning', 'ResourceWarning',
+                      'ConnectionError', 'BlockingIOError', 'BrokenPipeError', 'ChildProcessError', 'ConnectionAbortedError',
+                      'ConnectionRefusedError', 'ConnectionResetError', 'FileExistsError', 'FileNotFoundError',
+                      'IsADirectoryError', 'NotADirectoryError', 'InterruptedError', 'PermissionError', 'ProcessLookupError',
+                      'TimeoutError']
 
-safe_builtins = {
-    'abs': abs, 'all': all, 'any': any, 'ascii': ascii, 'bin': bin, 'chr': chr, 'dir': dir,
-    'divmod': divmod, 'format': format, 'getattr': getattr, 'globals': globals, 'help': help,
-    'hasattr': hasattr, 'hash': hash, 'hex': hex, 'id': id, 'isinstance': isinstance,
-    'issubclass': issubclass, 'iter': iter, 'len': len, 'locals': locals,
-    'max': max, 'min': min, 'next': next, 'oct': oct, 'ord': ord,
-    'pow': pow, 'print': print, 'repr': repr, 'round': round, 'setattr': setattr,
-    'sorted': sorted, 'sum': sum, 'vars': vars, 'None': None, 'Ellipsis': Ellipsis,
-    'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': bool,
-    'bytearray': bytearray, 'bytes': bytes, 'classmethod': classmethod,'complex': complex,
-    'dict': dict, 'enumerate': enumerate, 'filter': filter, 'float': float,
-    'frozenset': frozenset, 'property': property, 'int': int, 'list': list, 'map': map,
-    'object': object, 'range': range, 'reversed': reversed, 'set': set, 'slice': slice,
-    'staticmethod': staticmethod, 'str': str, 'super': super, 'tuple': tuple, 'type': type,
-    'zip': zip,
-    'BaseException': BaseException, 'Exception': Exception, 'TypeError': TypeError,
-    'StopAsyncIteration': StopAsyncIteration, 'StopIteration': StopIteration,
-    'GeneratorExit': GeneratorExit, 'SystemExit': SystemExit,
-    'KeyboardInterrupt': KeyboardInterrupt, 'ImportError': ImportError,
-    'ModuleNotFoundError': ModuleNotFoundError, 'EOFError': EOFError,
-    'RuntimeError': RuntimeError, 'RecursionError': RecursionError,
-    'NotImplementedError': NotImplementedError, 'NameError': NameError,
-    'UnboundLocalError': UnboundLocalError, 'AttributeError': AttributeError,
-    'SyntaxError': SyntaxError, 'IndentationError': IndentationError,
-    'TabError': TabError, 'LookupError': LookupError, 'IndexError': IndexError,
-    'KeyError': KeyError, 'ValueError': ValueError, 'UnicodeError': UnicodeError,
-    'UnicodeEncodeError': UnicodeEncodeError, 'UnicodeDecodeError': UnicodeDecodeError,
-    'UnicodeTranslateError': UnicodeTranslateError, 'AssertionError': AssertionError,
-    'ArithmeticError': ArithmeticError, 'FloatingPointError': FloatingPointError,
-    'OverflowError': OverflowError, 'ZeroDivisionError': ZeroDivisionError,
-    'SystemError': SystemError, 'ReferenceError': ReferenceError,
-    'MemoryError': MemoryError, 'BufferError': BufferError, 'Warning': Warning,
-    'UserWarning': UserWarning,
-    'DeprecationWarning': DeprecationWarning,
-    'PendingDeprecationWarning': PendingDeprecationWarning, 'SyntaxWarning': SyntaxWarning,
-    'RuntimeWarning': RuntimeWarning, 'FutureWarning': FutureWarning,
-    'ImportWarning': ImportWarning, 'UnicodeWarning': UnicodeWarning,
-    'BytesWarning': BytesWarning, 'ResourceWarning': ResourceWarning,
-    'ConnectionError': ConnectionError, 'BlockingIOError': BlockingIOError,
-    'BrokenPipeError': BrokenPipeError, 'ChildProcessError': ChildProcessError,
-    'ConnectionAbortedError': ConnectionAbortedError,
-    'ConnectionRefusedError': ConnectionRefusedError,
-    'ConnectionResetError': ConnectionResetError, 'FileExistsError': FileExistsError,
-    'FileNotFoundError': FileNotFoundError, 'IsADirectoryError': IsADirectoryError,
-    'NotADirectoryError': NotADirectoryError, 'InterruptedError': InterruptedError,
-    'PermissionError': PermissionError, 'ProcessLookupError': ProcessLookupError,
-    'TimeoutError': TimeoutError
-}
+class MISSING: pass
 
-if sys.version_info.minor >= 10:
-    safe_builtins['aiter'] = aiter
-    safe_builtins['anext'] = anext
-    safe_builtins['EncodingWarning'] = EncodingWarning
+safe_builtins = {}
+for name in safe_builtin_names:
+    if __builtins__.get(name, MISSING) is not MISSING:
+        safe_builtins[name] = __builtins__[name]
 
 safe_libraries = ['math']
 
