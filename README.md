@@ -20,7 +20,7 @@ Python offers limited sandbox possibilities, with most solutions out there hard 
 - removal of builtins that could cause problems (aka `open(), quit(), exit()`)
 - removal of `import` and `__import__`
 - ability to pre-import "safe" libraries, such as `math`
-- calling user defined functions from the variables dict [ATTENTION! not safe yet, just expwrimental!!!]
+- calling user defined functions from the variables dict [ATTENTION! not safe yet, just experimental!!!]
 ## Known bugs/loopholes
 ```py
 (  
