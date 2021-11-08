@@ -24,6 +24,6 @@ Python offers limited sandbox possibilities, with most solutions out there hard 
 -> main process quit: 
 -> Process finished with exit code -1073741819 (0xC0000005)
 ```
-## planned/todo:
+## planned/todo
 - will add later as my time is now limited
 - any contributions are welcome and if you do not want to make a pull request at least submit a bug :)
