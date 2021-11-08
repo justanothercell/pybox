@@ -17,7 +17,7 @@ Python offers limited sandbox possibilities, with most solutions out there hard 
 - removal of `import` and `__import__`
 - ability to pre-import "safe" libraries, such as `math`
 - calling user defined functions from the variables dict [ATTENTION! not safe yet, just expwrimental!!!]
-## Known bugs
+## Known bugs/loopholes
 ```py
 (  
     lambda fc=(lambda n: [c for c in ().__class__.__bases__[0].__subclasses__()  
