@@ -36,12 +36,12 @@ class PyBox:
                     exec(code, self.variables)
                 s = f.getvalue()
                 self.printer(s)
-            except BaseException as e:
+            except BaseException:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 ret_val = 1
-                exception_array = traceback.format_exception(e)
-                i = tuple(1 if 'File "<string>", line' in line else 0 for line in exception_array).index(1)
-                exception_str = '\n'.join([line.strip() for line in exception_array[i:]])
+                exception_array = traceback.format_exc()
+                i = tuple(1 if 'File "<string>", line' in line else 0 for line in exception_array.splitlines()).index(1)
+                exception_str = '\n'.join([line.strip() for line in exception_array.splitlines()[i:]])
                 if self.err_printer is not None:
                     self.err_printer(exception_str)
                 else:
