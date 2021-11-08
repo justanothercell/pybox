@@ -34,7 +34,7 @@ safe_builtins = {
     'divmod': divmod, 'format': format, 'getattr': getattr, 'globals': globals, 'help': help,
     'hasattr': hasattr, 'hash': hash, 'hex': hex, 'id': id, 'isinstance': isinstance,
     'issubclass': issubclass, 'iter': iter, 'len': len, 'locals': locals,
-    'max': max, 'min': min, 'next': next, 'anext': anext, 'oct': oct, 'ord': ord,
+    'max': max, 'min': min, 'next': next, 'oct': oct, 'ord': ord,
     'pow': pow, 'print': print, 'repr': repr, 'round': round, 'setattr': setattr,
     'sorted': sorted, 'sum': sum, 'vars': vars, 'None': None, 'Ellipsis': Ellipsis,
     'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': bool,
@@ -61,7 +61,7 @@ safe_builtins = {
     'OverflowError': OverflowError, 'ZeroDivisionError': ZeroDivisionError,
     'SystemError': SystemError, 'ReferenceError': ReferenceError,
     'MemoryError': MemoryError, 'BufferError': BufferError, 'Warning': Warning,
-    'UserWarning': UserWarning, 'EncodingWarning': EncodingWarning,
+    'UserWarning': UserWarning,
     'DeprecationWarning': DeprecationWarning,
     'PendingDeprecationWarning': PendingDeprecationWarning, 'SyntaxWarning': SyntaxWarning,
     'RuntimeWarning': RuntimeWarning, 'FutureWarning': FutureWarning,
@@ -80,6 +80,8 @@ safe_builtins = {
 
 if sys.version_info.minor >= 10:
     safe_builtins['aiter'] = aiter
+    safe_builtins['anext'] = anext
+    safe_builtins['EncodingWarning'] = EncodingWarning
 
 safe_libraries = ['math']
 
