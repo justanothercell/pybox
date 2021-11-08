@@ -1,6 +1,8 @@
 # pybox
 A sandbox version of python
 
+read examples.py for well... examples :)
+
 ### Disclaimer! 
 This is by no means a complete, finished and/or completely safe!
 It's a work in progress and you are welcome to use or try to patch it!
