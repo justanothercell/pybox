@@ -4,6 +4,7 @@ A sandbox version of python
 read examples.py for well... examples :)
 
 made for python 3.10, should work in older versions too. uses only builtin libraries.
+edit: some builtins from 3.10 were removed to create support for 3.9
 
 ### Disclaimer! 
 This is by no means a complete, finished and/or completely safe!
