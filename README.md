@@ -39,6 +39,12 @@ y()
 -> main process quit: 
 -> Process finished with exit code -1073741819 (0xC0000005)
 ```
+attempt at fixing:
+```py
+>>> f = [c for c in ().__class__.__bases__[0].__subclasses__() if c.__name__ == 'function'][0]
+>>> f.__name__
+'function'
+```
 ## planned/todo
 - safe extraction of variables/functions
 - will add more later as my time is now limited
