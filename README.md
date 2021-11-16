@@ -7,13 +7,13 @@ https://discord.gg/eHuWatKYwJ
 read examples.py for well... examples :)
 
 made for python 3.10, should work in older versions too. uses only builtin libraries.
-edit: some builtins from 3.10 were removed to create support for 3.9
+Dynamic input system to avoid conflicts for older versions.
 
 ### Disclaimer! 
 This is by no means a complete, finished and/or completely safe!
 It's a work in progress and you are welcome to use or try to patch it!
 Thank you for any help!!!
-## Why i chose to do this
+## Why I chose to do this
 Python offers limited sandbox possibilities, with most solutions out there hard to find and often outdated. The idea is to create a sandbox environment in python itself with (best case) no work "outside" of python needed (aka docker or vms for example.)
 ## Features
 - configurable timeouts to prevent infinite loops
@@ -21,6 +21,7 @@ Python offers limited sandbox possibilities, with most solutions out there hard 
 - removal of `import` and `__import__`
 - ability to pre-import "safe" libraries, such as `math`
 - calling user defined functions from the variables dict [ATTENTION! not safe yet, just experimental!!!]
+- repl console
 ## Known bugs/loopholes
 ```py
 (  

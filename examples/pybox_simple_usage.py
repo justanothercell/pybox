@@ -26,3 +26,5 @@ print('end')
 # executes the func function we created earlier
 print(box.variables["func"]())
 
+# a possibly safer approach would be box.exec('func()')
+

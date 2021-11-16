@@ -21,35 +21,40 @@ class PyBox:
 
     # for arg/kwarg printer:
     # lambda *args, **kwargs: print('from box:', *args, **kwargs)
-    def set_printer(self, printer: Callable, err_printer: Callable=None):
+    def set_printer(self, printer: Callable, err_printer: Callable = None):
         self.printer = printer
         self.err_printer = err_printer
 
-    def exec(self, code: str, abort_time=0, callback=lambda ret_val, exec_time: ...):
+    def exec(self, code: str, abort_time=0, callback=lambda ret_val, exec_time: ..., halt_main_thread=False):
         start_time = time.perf_counter_ns()
+
         def _exec():
             ret_val = 0
+            f = StringIO()
             try:
-                f = StringIO()
                 with redirect_stdout(f):
                     exec(code, self.variables)
                 s = f.getvalue()
                 self.printer(s)
             except BaseException:
+                s = f.getvalue()
+                self.printer(s)
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 if not isinstance(exc_value, SystemExit):
                     ret_val = 1
                     exception_array = traceback.format_exc()
-                    i = tuple(1 if 'File "<string>", line' in line else 0 for line in exception_array.splitlines()).index(1)
+                    i = tuple(
+                        1 if 'File "<string>", line' in line else 0 for line in exception_array.splitlines()).index(1)
                     exception_str = '\n'.join([line.strip() for line in exception_array.splitlines()[i:]])
                     if self.err_printer is not None:
                         self.err_printer(exception_str)
                     else:
                         self.printer(exception_str)
 
-            exec_time = (time.perf_counter_ns()-start_time)/1e9
+            exec_time = (time.perf_counter_ns() - start_time) / 1e9
             self.total_time += exec_time
             callback(ret_val, exec_time)
+
         thread = Thread(target=_exec)
         thread.start()
         if abort_time != 0:
@@ -60,7 +65,8 @@ class PyBox:
                     thread.terminate()
                     self.total_time += exec_time
                     callback(2, exec_time)
+
             abort_thread = Thread(target=_abort)
             abort_thread.start()
-        thread.join()
-
+        if halt_main_thread:
+            thread.join()
